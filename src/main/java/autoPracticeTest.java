@@ -20,10 +20,8 @@ public class autoPracticeTest {
         String expectedSize = "M";
         String expectedColor = "White";
         String expectedProductName;
-        String googleURL = "http://google.com";
         String shopURL = "http://automationpractice.com";
         double singlePrice;
-        driver.navigate(googleURL);
         driver.navigate(shopURL);
 
         driver.implicitlyWait(20, TimeUnit.MILLISECONDS);
@@ -38,7 +36,6 @@ public class autoPracticeTest {
         driver.selectDressSize(expectedSize);
         driver.selectDressColor(expectedColor);
         driver.clickSubmitButton();
-        driver.implicitlyWait(10, TimeUnit.SECONDS);
         driver.returnDefaultContent();
         driver.clickCloseButton();
         driver.navigateToShoppingCart();
