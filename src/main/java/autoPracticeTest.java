@@ -54,13 +54,13 @@ public class autoPracticeTest {
         Assert.assertEquals(expectedProductName, driver.getProductName());
 
         double currentShippingCost = driver.getShippingCost();
-        double expectedTotalSum = ( singlePrice * currentQuantity) + currentShippingCost;
+        double expectedTotalSum = (singlePrice * currentQuantity) + currentShippingCost;
         Assert.assertEquals(expectedTotalSum, driver.getTotalSum(), 0.0);
 
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         driver.destroyWebDriver();
     }
 }
