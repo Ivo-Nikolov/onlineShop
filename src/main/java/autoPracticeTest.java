@@ -2,8 +2,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import java.util.concurrent.TimeUnit;
 
@@ -24,6 +22,7 @@ public class autoPracticeTest {
         String expectedProductName;
         String googleURL = "http://google.com";
         String shopURL = "http://automationpractice.com";
+        double singlePrice;
         driver.navigate(googleURL);
         driver.navigate(shopURL);
 
@@ -34,6 +33,7 @@ public class autoPracticeTest {
         expectedProductName = driver.getInitialProductName();
         driver.navigateToQuickView();
         driver.navigateToQuickViewIframe();
+        singlePrice = driver.getPrice();
         driver.selectQuantity(expectedQuantity);
         driver.selectDressSize(expectedSize);
         driver.selectDressColor(expectedColor);
@@ -42,8 +42,8 @@ public class autoPracticeTest {
         driver.returnDefaultContent();
         driver.clickCloseButton();
         driver.navigateToShoppingCart();
-
-        Assert.assertEquals(Integer.toString(expectedQuantity), driver.getQuantity());
+        int currentQuantity = driver.getQuantity();
+        Assert.assertEquals(expectedQuantity, currentQuantity);
 
         String[] productAttributes = driver.getProductAttributes().split(", ");
         String color = productAttributes[0];
@@ -53,14 +53,9 @@ public class autoPracticeTest {
 
         Assert.assertEquals(expectedProductName, driver.getProductName());
 
-
-//        WebElement shippingCostElement = webDriver.findElement(By.xpath("//div[@class='cart-prices']/div[contains(@class, 'first-line')]/span[1]"));
-//        double shippingCost = Double.parseDouble(shippingCostElement.getText().substring(1));
-//        WebElement totalSumElement = webDriver.findElement(By.xpath("//div[@class='cart-prices']/div[contains(@class, 'last-line')]/span[1]"));
-//        double totalSum = Double.parseDouble(totalSumElement.getText().substring(1));
-        double expectedTotalSum = (driver.getPrice() * Double.parseDouble(driver.getQuantity())) + Double.parseDouble(driver.getShippingCost());
-        Assert.assertEquals(expectedTotalSum, Double.parseDouble(driver.getTotalSum()), 0.0);
-//        WebElement name = webDriver.findElement(By.xpath("//a[@class='cart_block_product_name']"));
+        double currentShippingCost = driver.getShippingCost();
+        double expectedTotalSum = ( singlePrice * currentQuantity) + currentShippingCost;
+        Assert.assertEquals(expectedTotalSum, driver.getTotalSum(), 0.0);
 
     }
 
